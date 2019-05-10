@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+ <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"></script>
+<!-- Register an aframe component that allows reacting to marker events -->
+<!-- Register an aframe component that allows reacting to marker events -->
+<script>
+	AFRAME.registerComponent('registerevents', {
+		init: function () {
+			var marker = this.el;
+			// Make the element emit events when found and when lost.
+			marker.setAttribute('emitevents', 'true');
+			marker.addEventListener('markerFound', function() {
+				var markerId = marker.id;
+				console.log('markerFound', markerId);
+				// TODO: Add your own code here to react to the marker being found.
+			});
+			marker.addEventListener('markerLost', function() {
+				var markerId = marker.id;
+				console.log('markerLost', markerId);
+				// TODO: Add your own code here to react to the marker being lost.
+			});
+		}
+	});
+</script>
+
+<body style='margin : 0px; overflow: hidden; font-family: Monospace;'><div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
+	<a href="https://github.com/jeromeetienne/AR.js/" target="_blank">AR.js</a> - marker events example for a-frame
+	<br/>
+	Contact me any time at <a href='https://twitter.com/jerome_etienne' target='_blank'>@jerome_etienne</a>
+</div>
+	<a-scene embedded arjs='sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3;'>
+		<!-- handle hiro marker -->
+		<!-- 'registerevents' will register event listeners for the marker when it is found and lost,
+		as defined in the inline script above -->
+		<a-marker preset='hiro' id='marker-hiro' registerevents>
+         <a-sphere position="0 0 0" radius="0.1" color="#EF2D5E"></a-sphere>
+     
+            <a-cylinder position="0 0 0" radius="0.5" height="1.5" color="#FFC65D" material="wireframe:true"></a-cylinder>
+   
+      <a-obj-model scale="0.01 .01 .01" position="0 0 0" rotation="-90 0 0" src="https://cdn.glitch.com/2e9cc434-eb31-4573-90b0-587c99503fd3%2Ftinker.obj?1557506915138"
+                mtl="https://cdn.glitch.com/2e9cc434-eb31-4573-90b0-587c99503fd3%2Fobj.mtl?1557506912826"
+                 ></a-obj-model>
+		</a-marker>
+
+		<!-- handle matrix marker -->
+		<!-- 'emitevents' will make the marker emit events when it is found and lost
+		but, since there are no registered listeners for these events, you will not see any effect.
+		You can register event listeners in your own custom component, defined similarly to
+		the 'registerevents' in the inline script above -->
+		<a-marker type='barcode' value='5' id='marker-barcode-5' emitevents='true'>
+		</a-marker>
+
+		<!-- add a simple camera -->
+		<a-entity camera></a-entity>
+	</a-scene>
+</body>
+</html>
