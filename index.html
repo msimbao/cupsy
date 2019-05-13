@@ -12,12 +12,12 @@
 			marker.addEventListener('markerFound', function() {
 				var markerId = marker.id;
 				console.log('markerFound', markerId);
-				// TODO: Add your own code here to react to the marker being found.
+				
 			});
 			marker.addEventListener('markerLost', function() {
 				var markerId = marker.id;
 				console.log('markerLost', markerId);
-				// TODO: Add your own code here to react to the marker being lost.
+				plusSlides(1).
 			});
 		}
 	});
@@ -81,18 +81,14 @@ function showSlides(n) {
 		<!-- handle hiro marker -->
 		<!-- 'registerevents' will register event listeners for the marker when it is found and lost,
 		as defined in the inline script above -->
-		<a-marker preset='hiro' id='marker-hiro' registerevents>
-   
-      <a-obj-model scale="0.01 .01 .01" position="0 0 0" rotation="-90 0 0"
-    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Fcup.obj?1557768027607"            
-                   material="wireframe: true;color:#E27D60"
-             geometry="primitive: box;"
-		   
-		   animation="property: rotation; to: 0 360 0; loop: true; dur: 10000;easing:linear;"
-                 >
-      
+		<a-marker  type='barcode' value='1' id='marker-barcode-1' emitevents='true' registerevents>
+   			
+		<a-entity onclick="plusSlides(1)" material="side: double;color:#333333;opacity:1;"  scale="1 1 1" 
+                 
+                 geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"
+                 
+                 text="zOffset:0.2;align:center;baseline:top;value:Next; wrapCount:10; color:#333333; shader: msdf; font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/fredokaone/FredokaOne-Regular.json;" position="0 0 -0"></a-entity>  
 
-      </a-obj-model>
       
 		</a-marker>
 
@@ -104,7 +100,8 @@ function showSlides(n) {
 		<a-marker type='barcode' value='0' id='marker-barcode-5' emitevents='true'>
 		
 		<a-entity>
-            <a-obj-model scale="0.01 .01 .01" position="0.2 0 0" rotation="-90 0 0"
+            <a-obj-model class="mySlides" visible="true"
+	scale="0.01 .01 .01" position="0.2 0 0" rotation="-90 0 0"
     src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Fcup.obj?1557768027607"            
                    material="color:#9AB87A;"
              geometry="primitive: box;"
@@ -124,6 +121,33 @@ function showSlides(n) {
 	material="color:#F8F991"
 				     >
 				</a-obj-model>
+		</a-entity>
+			
+			<----------------------------- 1/2 Cup --------------------------------->
+			
+	   	<a-entity class="mySlides" visible="false">
+            <a-obj-model scale="0.01 .01 .01" position="0.2 0 0" rotation="-90 0 0"
+    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Fhalfcup.obj?1557778403637"            
+                   material="color:#9D615B;"
+             geometry="primitive: box;"
+	 animation="property: rotation; to: -90 0 360; loop: true; dur: 10000;easing:linear;"
+	 model-opacity="0.5"
+                 >
+      </a-obj-model>
+      
+			  <a-obj-model scale="0.01 .01 .01" position="0 0 0.5" rotation="-90 0 0"
+    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1_cup_text.obj?1557771927771"            
+                  material="color:#444B6E;"
+             geometry="primitive: box;">
+      </a-obj-model>
+			
+			<a-obj-model scale="0.01 .01 .01" position="0.2 -0.5 0.2" rotation="-90 0 0"
+	src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Ftinker.obj?1557777549406"
+	material="color:#F8F991"
+				     >
+				</a-obj-model>
+          
+          
 		</a-entity>
 			
     </a-marker>
