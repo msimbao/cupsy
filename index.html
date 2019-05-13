@@ -82,7 +82,7 @@ function showSlides(n) {
 		<!-- handle hiro marker -->
 		<!-- 'registerevents' will register event listeners for the marker when it is found and lost,
 		as defined in the inline script above -->
-		<a-marker  type='barcode' value='1' id='marker_1' emitevents='true' registerevents>
+		<a-marker  type='barcode' value='1' id='marker_1' emitevents='true' >
    			
 		<a-entity onclick="plusSlides(1)" material="side: double;color:#333333;opacity:1;"  scale="1 1 1" 
                  
@@ -99,7 +99,7 @@ function showSlides(n) {
 		but, since there are no registered listeners for these events, you will not see any effect.
 		You can register event listeners in your own custom component, defined similarly to
 		the 'registerevents' in the inline script above -->
-		<a-marker type='barcode' value='0' id='marker_5' emitevents='true'>
+		<a-marker type='barcode' value='0' id='marker_5' emitevents='true' registerevents>
 		
 		<a-entity class="mySlides" visible="true">
             <a-obj-model 
