@@ -33,22 +33,8 @@
 		<!-- 'registerevents' will register event listeners for the marker when it is found and lost,
 		as defined in the inline script above -->
 		<a-marker preset='hiro' id='marker-hiro' registerevents>
- 
-      <a-obj-model scale="0.01 .01 .01" position="0 0 0" rotation="-90 0 0" src="https://cdn.glitch.com/2e9cc434-eb31-4573-90b0-587c99503fd3%2Ftinker.obj?1557506915138"
-                
-		   material="wireframe: true;"
-             geometry="primitive: box;"
-                 ></a-obj-model>
-		</a-marker>
-
-		<!-- handle matrix marker -->
-		<!-- 'emitevents' will make the marker emit events when it is found and lost
-		but, since there are no registered listeners for these events, you will not see any effect.
-		You can register event listeners in your own custom component, defined similarly to
-		the 'registerevents' in the inline script above -->
-		<a-marker type='barcode' value='5' id='marker-barcode-5' emitevents='true'>
-			
-			    <a-obj-model scale="0.01 .01 .01" position="0 0 0" rotation="-90 0 0"
+   
+      <a-obj-model scale="0.01 .01 .01" position="0 0 0" rotation="-90 0 0"
     src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Fcup.obj?1557768027607"            
                    material="wireframe: true;color:#E27D60"
              geometry="primitive: box;"
@@ -57,7 +43,24 @@
         <a-animation attribute="rotation" from="20 0 0" to="20 360 0" direction="normal" dur="4000" repeat="indefinite" easing="linear"></a-animation>
   
       </a-obj-model>
+      
 		</a-marker>
+
+		<!-- handle matrix marker -->
+		<!-- 'emitevents' will make the marker emit events when it is found and lost
+		but, since there are no registered listeners for these events, you will not see any effect.
+		You can register event listeners in your own custom component, defined similarly to
+		the 'registerevents' in the inline script above -->
+		<a-marker type='barcode' value='0' id='marker-barcode-5' emitevents='true'>
+		
+            <a-obj-model scale="0.2 .2 .2" position="0 0 0" rotation="-90 0 0"
+    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Fcup.obj?1557768027607"            
+                   material="wireframe: true;color:#E27D60"
+             geometry="primitive: box;"
+                 >
+      </a-obj-model>
+      
+    </a-marker>
 
 		<!-- add a simple camera -->
 		<a-entity camera></a-entity>
