@@ -3,26 +3,79 @@
 <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"></script>
 <!-- Register an aframe component that allows reacting to marker events -->
 <!-- Register an aframe component that allows reacting to marker events -->
-<script>
-	AFRAME.registerComponent('registerevents', {
-		init: function () {
-			var marker = this.el;
-			// Make the element emit events when found and when lost.
-			marker.setAttribute('emitevents', 'true');
-			marker.addEventListener('markerFound', function() {
-				var markerId = marker.id;
-				console.log('markerFound', markerId);
-				plusSlides(1);
-				
-			});
-			marker.addEventListener('markerLost', function() {
-				var markerId = marker.id;
-				console.log('markerLost', markerId);
-				plusSlides(1);
-			});
-		}
-	});
-</script>
+
+<style>
+
+/*Loader ================*/
+  
+  .load {
+    background:url('https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2FCupsy.jpg?1559102896621');
+  background-repeat:no-repeat;
+    background-size: cover;
+    position:absolute;
+    z-index:500;
+width:100%;
+height:100%;
+text-align:center;
+margin:auto;
+  -webkit-animation: disappear 5s forwards ; /* Safari */
+  animation: disappear 5s forwards ;
+}
+  
+.loader1 {
+	position:absolute;
+   margin:auto;
+    top:40%;
+     left:0px;
+    right:0px;
+  border: 10px solid rgba(255, 255, 255, 0);
+  border-radius: 50%;
+  border-top: 10px solid white;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 1s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
+}
+
+.loader2 {
+	position:absolute;
+       margin:auto;
+    top:40%;
+    left:0px;
+    right:0px;
+  border: 10px solid rgba(255, 255, 255, 0);
+  border-radius: 50%;
+  border-bottom: 10px dashed white;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Safari */
+@-webkit-keyframes disappear {
+  0% { -webkit-opacity: 1; }
+   80% { -webkit-opacity:1;  width:100%}
+  100% { -webkit-opacity: 0; width:0%;}
+}
+
+@keyframes disappear {
+  0% { opacity: 1; }
+   80% {opacity:1; width:100% }
+  100% {opacity: 0;  width:0%;}
+}
+</style>
 
 <script>
 	AFRAME.registerComponent('model-opacity', {
@@ -53,6 +106,7 @@ showSlides(slideIndex);
 
 function plusSlides(n) {
   showSlides(slideIndex += n);
+  console.log(5 + 6);
 }
 
 function currentSlide(n) {
@@ -73,24 +127,77 @@ function showSlides(n) {
 }
 </script>
 
-<body style='margin : 0px; overflow: hidden; font-family: Monospace;'><div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
-	<a href="https://github.com/jeromeetienne/AR.js/" target="_blank">AR.js</a> - marker events example for a-frame
-	<br/>
-	Contact me any time at <a href='https://twitter.com/jerome_etienne' target='_blank'>@jerome_etienne</a>
+<body style='margin : 0px; overflow: hidden; font-family: Monospace;width:100%;height:100%;'>
+
+     <div class="load">
+<div class="loader1"></div>
+<div class="loader2"></div>
 </div>
-	<a-scene embedded arjs='sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3;'>
+  
+	<!--- Buttons -->
+  <div style="position:fixed;bottom:0px;z-index:10">
+  <div onclick="plusSlides(1)" style="position:absolute; bottom:10px;left:200px;">
+    <img src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2FPicture2.png?1558983272252" width="200px" height="120px">
+    
+  </div>
+  
+  <div onclick="plusSlides(-1)" style="position:absolute; bottom:10px;left:0px;">
+    <img src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2FPicture1.png?1558983272337" width="200px" height="120px">
+    
+  </div>
+    
+  </div>
+  
+
+  
+	<a-scene style="z-index:1;" embedded arjs='sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3;debugUIEnabled:false;'>
 		<!-- handle hiro marker -->
 		<!-- 'registerevents' will register event listeners for the marker when it is found and lost,
 		as defined in the inline script above -->
-		<a-marker  type='barcode' value='1' id='marker_1' emitevents='true' >
-   			
-		<a-entity onclick="plusSlides(1)" material="side: double;color:#333333;opacity:1;"  scale="1 1 1" 
-                 
-		rotation="-90 0 0"	  
-                 geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.5"
-                 
-                 text="zOffset:0.2;align:center;baseline:top;value:Next; wrapCount:10; color:#333333; shader: msdf; font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/fredokaone/FredokaOne-Regular.json;" position="0 0 -0"></a-entity>  
-
+		<a-marker preset='hiro' id='marker-hiro' emitevents="true" >
+   
+      <a-entity class="mySlides" visible="true">
+       <a-obj-model scale="0.01 .01 .01" position="0 1 0" rotation="-90 0 0"
+    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1cup.obj?1559099930558"            
+                   material="color:#457996;"
+             geometry="primitive: box;"
+	 animation="property: rotation; to: -90 0 360; loop: true; dur: 10000;easing:linear;"
+	 model-opacity="0.5"
+                 >
+      </a-obj-model>
+      
+       <a-obj-model scale="0.01 .01 .01" position="0 0 0" rotation="-90 0 0"
+    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1cup_bottom.obj?1559099943501"            
+                   material="color:#333333;"
+             geometry="primitive: box;"
+	 animation="property: position; to: 0 0.5 0; loop: true; dur: 10000;easing:linear;"
+	 model-opacity="1"
+                 >
+      </a-obj-model>
+      </a-entity>
+      
+       <a-entity class="mySlides" visible="false">
+       <a-obj-model scale="0.005 .005 .005" position="0 1 0" rotation="-90 0 0"
+    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1cup.obj?1559099930558"            
+                   material="color:red;"
+             geometry="primitive: box;"
+	 animation="property: rotation; to: -90 0 360; loop: true; dur: 10000;easing:linear;"
+	 model-opacity="0.5"
+                 >
+      </a-obj-model>
+      
+       <a-obj-model scale="0.01 .01 .01" position="0 0 0" rotation="-90 0 0"
+    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1cup_bottom.obj?1559099943501"            
+                   material="color:#333333;"
+             geometry="primitive: box;"
+	 animation="property: position; to: 0 0.5 0; loop: true; dur: 10000;easing:linear;"
+	 model-opacity="1"
+                 >
+      </a-obj-model>
+      </a-entity>
+		
+			
+			
       
 		</a-marker>
 
@@ -99,13 +206,12 @@ function showSlides(n) {
 		but, since there are no registered listeners for these events, you will not see any effect.
 		You can register event listeners in your own custom component, defined similarly to
 		the 'registerevents' in the inline script above -->
-		<a-marker type='barcode' value='0' id='marker_5' emitevents='true' registerevents>
+		<a-marker type='barcode' value='0' id='marker-barcode-5' >
 		
-		<a-entity class="mySlides" visible="true">
-            <a-obj-model 
-	scale="0.01 .01 .01" position="0.2 0 0" rotation="-90 0 0"
-    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Fcup.obj?1557768027607"            
-                   material="color:#9AB87A;"
+		<a-entity>
+            <a-obj-model scale="0.01 .01 .01" position="0 0 0" rotation="-90 0 0"
+    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1cup.obj?1558984374073"            
+                   material="color:#457996;"
              geometry="primitive: box;"
 	 animation="property: rotation; to: -90 0 360; loop: true; dur: 10000;easing:linear;"
 	 model-opacity="0.5"
@@ -113,49 +219,32 @@ function showSlides(n) {
       </a-obj-model>
       
 			  <a-obj-model scale="0.01 .01 .01" position="0 0 0.5" rotation="-90 0 0"
-    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1_cup_text.obj?1557771927771"            
-                  material="color:#444B6E;"
+    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1cup_bottom.obj?1558984393067"            
+                  material="color:#202020;"
              geometry="primitive: box;">
       </a-obj-model>
 			
-			<a-obj-model scale="0.01 .01 .01" position="0.2 -0.5 0.2" rotation="-90 0 0"
-	src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Ftinker.obj?1557777549406"
-	material="color:#F8F991"
+			<a-obj-model scale="0.01 .01 .01" position="0 -0.1 0.5" rotation="-90 0 0" 
+	src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Fbase.obj?1557776555988"
+    material="color:#457996;"
+    model-opacity="0.1"
 				     >
 				</a-obj-model>
-		</a-entity>
-			
-			<----------------------------- 1/2 Cup --------------------------------->
-			
-	   	<a-entity class="mySlides" visible="false">
-            <a-obj-model scale="0.01 .01 .01" position="0.2 0 0" rotation="-90 0 0"
-    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Fhalfcup.obj?1557778403637"            
-                   material="color:#9D615B;"
-             geometry="primitive: box;"
-	 animation="property: rotation; to: -90 0 360; loop: true; dur: 10000;easing:linear;"
-	 model-opacity="0.5"
-                 >
-      </a-obj-model>
-      
-			  <a-obj-model scale="0.01 .01 .01" position="0 0 0.5" rotation="-90 0 0"
-    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1_cup_text.obj?1557771927771"            
-                  material="color:#444B6E;"
-             geometry="primitive: box;">
-      </a-obj-model>
-			
-			<a-obj-model scale="0.01 .01 .01" position="0.2 -0.5 0.2" rotation="-90 0 0"
-	src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Ftinker.obj?1557777549406"
-	material="color:#F8F991"
-				     >
-				</a-obj-model>
-          
-          
 		</a-entity>
 			
     </a-marker>
 
 		<!-- add a simple camera -->
 		<a-entity camera></a-entity>
+    
+    
+    <script>
+    document.querySelector("button").addEventListener("click", (e)=> {
+  showSlides(slideIndex += n);
+  console.log(5 + 6);
+})
+    </script>
 	</a-scene>
+
 </body>
 </html>
