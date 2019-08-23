@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+ <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"></script>
+<!-- Register an aframe component that allows reacting to marker events -->
+<!-- Register an aframe component that allows reacting to marker events -->
+
+<style>
+
+/*Loader ================*/
+  
+  .load {
+    background:#6fa8dcff;
+  background-repeat:no-repeat;
+    background-size: cover;
+    position:absolute;
+    z-index:500;
+width:100%;
+height:100%;
+text-align:center;
+margin:auto;
+  -webkit-animation: disappear 5s forwards ; /* Safari */
+  animation: disappear 5s forwards ;
+}
+  
+.loader1 {
+	position:absolute;
+   margin:auto;
+    top:40%;
+     left:0px;
+    right:0px;
+  border: 10px solid rgba(255, 255, 255, 0);
+  border-radius: 50%;
+  border-top: 10px solid white;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 1s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
+}
+
+.loader2 {
+	position:absolute;
+       margin:auto;
+    top:40%;
+    left:0px;
+    right:0px;
+  border: 10px solid rgba(255, 255, 255, 0);
+  border-radius: 50%;
+  border-bottom: 10px dashed white;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Safari */
+@-webkit-keyframes disappear {
+  0% { -webkit-opacity: 1; }
+   80% { -webkit-opacity:1;  width:100%}
+  100% { -webkit-opacity: 0; width:0%;}
+}
+
+@keyframes disappear {
+  0% { opacity: 1; }
+   80% {opacity:1; width:100% }
+  100% {opacity: 0;  width:0%;}
+}
+</style>
+  
+  <script>
+	AFRAME.registerComponent('registerevents', {
+		init: function () {
+			var marker = this.el;
+			marker.addEventListener('markerFound', function() {
+				var markerId = marker.id;
+				console.log('markerFound', markerId);
+        plusSlides(1)
+				// TODO: Add your own code here to react to the marker being found.
+			});
+			marker.addEventListener('markerLost', function() {
+				var markerId = marker.id;
+				console.log('markerLost', markerId);
+        plusSlides(1)
+				// TODO: Add your own code here to react to the marker being lost.
+			});
+		}
+	});
+</script>
+
+<script>
+	AFRAME.registerComponent('model-opacity', {
+  schema: {default: 1.0},
+  init: function () {
+    this.el.addEventListener('model-loaded', this.update.bind(this));
+  },
+  update: function () {
+    var mesh = this.el.getObject3D('mesh');
+    var data = this.data;
+    if (!mesh) { return; }
+    mesh.traverse(function (node) {
+      if (node.isMesh) {
+        node.material.opacity = data;
+        node.material.transparent = data < 1.0;
+        node.material.needsUpdate = true;
+      }
+    });
+  }
+});
+</script>
+
+<script>
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+  console.log(5 + 6);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].object3D.visible = false;
+ 
+  }
+ 
+  slides[slideIndex-1].object3D.visible = true;
+}
+</script>
+
+<body style="margin : 0px; overflow: hidden; font-family: Monospace;width:100%;height:100%;">
+
+     <div class="load">
+<div class="loader1"></div>
+<div class="loader2"></div>
+</div>
+  
+	<!--- Buttons -->
+  <div style="position:fixed;bottom:0px;z-index:10">
+  <div onclick="plusSlides(1)" style="position:absolute; bottom:10px;left:200px;">
+    <img src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2FPicture2.png?1558983272252" width="200px" height="120px">
+    
+  </div>
+  
+
+    
+  </div>
+  
+
+  
+	<a-scene style="z-index:1;" embedded arjs="sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3;debugUIEnabled:false;">
+		<!-- handle hiro marker -->
+		<!-- 'registerevents' will register event listeners for the marker when it is found and lost,
+		as defined in the inline script above -->
+		<a-marker registerevents preset="hiro" id="marker-hiro" emitevents="true" >
+      
+      <a-entity class="allCups">
+   
+      <a-entity class="mySlides" visible="true">
+       <a-obj-model scale="0.01 .01 .01" position="0 1 0" rotation="-90 0 0"
+    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1cup.obj?1559258863883"            
+                   material="color:#457996;"
+             geometry="primitive: box;"
+	 animation="property: rotation; to: -90 0 360; loop: true; dur: 10000;easing:linear;"
+	 model-opacity="0.7"
+                 >
+      </a-obj-model>
+      
+       <a-obj-model scale="0.01 .01 .01" position="0 0 0" rotation="-90 0 0"
+    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1cup_bottom.obj?1559258867106"            
+                   material="color:#333333;"
+             geometry="primitive: box;"
+	 animation="property: position; to: 0 0.5 0; loop: true; dur: 10000;easing:linear;"
+	 model-opacity="0.7"
+                 >
+      </a-obj-model>
+      </a-entity>
+      
+       <a-entity class="mySlides" visible="false">
+       <a-obj-model scale="0.005 .005 .005" position="0 0 0" rotation="-90 0 0"
+    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Fhalf_cup.obj?1559259260685"            
+                   material="color:red;"
+             geometry="primitive: box;"
+	 animation="property: rotation; to: -90 0 360; loop: true; dur: 10000;easing:linear;"
+	 model-opacity="0.7"
+                 >
+      </a-obj-model>
+      
+       <a-obj-model scale="0.01 .01 .01" position="0 0 0" rotation="-90 0 0"
+    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Fhalfcup.obj?1559259246493"            
+                   material="color:#333333;"
+             geometry="primitive: box;"
+	 animation="property: position; to: 0 0.5 0; loop: true; dur: 10000;easing:linear;"
+	 model-opacity="0.7"
+                 >
+      </a-obj-model>
+      </a-entity>
+        
+        <a-entity class="mySlides" visible="false">
+       <a-obj-model scale="0.005 .005 .005" position="0 0 0" rotation="-90 0 0"
+    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Ftbsp.obj?1559259471949"            
+                   material="color:#B7C926;"
+             geometry="primitive: box;"
+	 animation="property: rotation; to: -90 0 360; loop: true; dur: 10000;easing:linear;"
+	 model-opacity="0.7"
+                 >
+      </a-obj-model>
+      
+       <a-obj-model scale="0.01 .01 .01" position="0 0 0" rotation="-90 0 0"
+    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Ftbsp_bottom.obj?1559259490601"            
+                   material="color:#333333;"
+             geometry="primitive: box;"
+	 animation="property: position; to: 0 0.5 0; loop: true; dur: 10000;easing:linear;"
+	 model-opacity="1"
+                 >
+      </a-obj-model>
+      </a-entity>
+		
+      
+      </a-entity>
+			
+			
+      
+		</a-marker>
+
+		<!-- add a simple camera -->
+		<a-entity camera></a-entity>
+    
+
+	</a-scene>
+
+</body>
+</html>
