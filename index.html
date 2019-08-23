@@ -1,250 +1,52 @@
 <!DOCTYPE html>
- <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
-<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"></script>
-<!-- Register an aframe component that allows reacting to marker events -->
-<!-- Register an aframe component that allows reacting to marker events -->
-
-<style>
-
-/*Loader ================*/
-  
-  .load {
-    background:url('https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2FCupsy.jpg?1559102896621');
-  background-repeat:no-repeat;
-    background-size: cover;
-    position:absolute;
-    z-index:500;
-width:100%;
-height:100%;
-text-align:center;
-margin:auto;
-  -webkit-animation: disappear 5s forwards ; /* Safari */
-  animation: disappear 5s forwards ;
-}
-  
-.loader1 {
-	position:absolute;
-   margin:auto;
-    top:40%;
-     left:0px;
-    right:0px;
-  border: 10px solid rgba(255, 255, 255, 0);
-  border-radius: 50%;
-  border-top: 10px solid white;
-  width: 20px;
-  height: 20px;
-  -webkit-animation: spin 1s linear infinite; /* Safari */
-  animation: spin 1s linear infinite;
-}
-
-.loader2 {
-	position:absolute;
-       margin:auto;
-    top:40%;
-    left:0px;
-    right:0px;
-  border: 10px solid rgba(255, 255, 255, 0);
-  border-radius: 50%;
-  border-bottom: 10px dashed white;
-  width: 20px;
-  height: 20px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
-}
-
-/* Safari */
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Safari */
-@-webkit-keyframes disappear {
-  0% { -webkit-opacity: 1; }
-   80% { -webkit-opacity:1;  width:100%}
-  100% { -webkit-opacity: 0; width:0%;}
-}
-
-@keyframes disappear {
-  0% { opacity: 1; }
-   80% {opacity:1; width:100% }
-  100% {opacity: 0;  width:0%;}
-}
-</style>
-
-<script>
-	AFRAME.registerComponent('model-opacity', {
-  schema: {default: 1.0},
-  init: function () {
-    this.el.addEventListener('model-loaded', this.update.bind(this));
-  },
-  update: function () {
-    var mesh = this.el.getObject3D('mesh');
-    var data = this.data;
-    if (!mesh) { return; }
-    mesh.traverse(function (node) {
-      if (node.isMesh) {
-        node.material.opacity = data;
-        node.material.transparent = data < 1.0;
-        node.material.needsUpdate = true;
-      }
-    });
-  }
-});
-</script>
-
-<script>
-
-<script>
-var slideIndex = 1;
-showSlides(slideIndex);
-
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-  console.log(5 + 6);
-}
-
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName("mySlides");
-  if (n > slides.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-      slides[i].object3D.visible = false;
- 
-  }
- 
-  slides[slideIndex-1].object3D.visible = true;
-}
-</script>
-
-<body style='margin : 0px; overflow: hidden; font-family: Monospace;width:100%;height:100%;'>
-
-     <div class="load">
-<div class="loader1"></div>
-<div class="loader2"></div>
-</div>
-  
-	<!--- Buttons -->
-  <div style="position:fixed;bottom:0px;z-index:10">
-  <div onclick="plusSlides(1)" style="position:absolute; bottom:10px;left:200px;">
-    <img src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2FPicture2.png?1558983272252" width="200px" height="120px">
+<html lang="en">
+  <head>
+    <title>Hello!</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
-  </div>
-  
-  <div onclick="plusSlides(-1)" style="position:absolute; bottom:10px;left:0px;">
-    <img src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2FPicture1.png?1558983272337" width="200px" height="120px">
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css">
     
-  </div>
+    <!-- import the webpage's javascript file -->
+    <script src="/script.js" defer></script>
     
-  </div>
-  
-
-  
-	<a-scene style="z-index:1;" embedded arjs='sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3;debugUIEnabled:false;'>
-		<!-- handle hiro marker -->
-		<!-- 'registerevents' will register event listeners for the marker when it is found and lost,
-		as defined in the inline script above -->
-		<a-marker preset='hiro' id='marker-hiro' emitevents="true" >
-   
-      <a-entity class="mySlides" visible="true">
-       <a-obj-model scale="0.01 .01 .01" position="0 1 0" rotation="-90 0 0"
-    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1cup.obj?1559099930558"            
-                   material="color:#457996;"
-             geometry="primitive: box;"
-	 animation="property: rotation; to: -90 0 360; loop: true; dur: 10000;easing:linear;"
-	 model-opacity="0.5"
-                 >
-      </a-obj-model>
-      
-       <a-obj-model scale="0.01 .01 .01" position="0 0 0" rotation="-90 0 0"
-    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1cup_bottom.obj?1559099943501"            
-                   material="color:#333333;"
-             geometry="primitive: box;"
-	 animation="property: position; to: 0 0.5 0; loop: true; dur: 10000;easing:linear;"
-	 model-opacity="1"
-                 >
-      </a-obj-model>
-      </a-entity>
-      
-       <a-entity class="mySlides" visible="false">
-       <a-obj-model scale="0.005 .005 .005" position="0 1 0" rotation="-90 0 0"
-    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1cup.obj?1559099930558"            
-                   material="color:red;"
-             geometry="primitive: box;"
-	 animation="property: rotation; to: -90 0 360; loop: true; dur: 10000;easing:linear;"
-	 model-opacity="0.5"
-                 >
-      </a-obj-model>
-      
-       <a-obj-model scale="0.01 .01 .01" position="0 0 0" rotation="-90 0 0"
-    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1cup_bottom.obj?1559099943501"            
-                   material="color:#333333;"
-             geometry="primitive: box;"
-	 animation="property: position; to: 0 0.5 0; loop: true; dur: 10000;easing:linear;"
-	 model-opacity="1"
-                 >
-      </a-obj-model>
-      </a-entity>
-		
-			
-			
-      
-		</a-marker>
-
-		<!-- handle matrix marker -->
-		<!-- 'emitevents' will make the marker emit events when it is found and lost
-		but, since there are no registered listeners for these events, you will not see any effect.
-		You can register event listeners in your own custom component, defined similarly to
-		the 'registerevents' in the inline script above -->
-		<a-marker type='barcode' value='0' id='marker-barcode-5' >
-		
-		<a-entity>
-            <a-obj-model scale="0.01 .01 .01" position="0 0 0" rotation="-90 0 0"
-    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1cup.obj?1558984374073"            
-                   material="color:#457996;"
-             geometry="primitive: box;"
-	 animation="property: rotation; to: -90 0 360; loop: true; dur: 10000;easing:linear;"
-	 model-opacity="0.5"
-                 >
-      </a-obj-model>
-      
-			  <a-obj-model scale="0.01 .01 .01" position="0 0 0.5" rotation="-90 0 0"
-    src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2F1cup_bottom.obj?1558984393067"            
-                  material="color:#202020;"
-             geometry="primitive: box;">
-      </a-obj-model>
-			
-			<a-obj-model scale="0.01 .01 .01" position="0 -0.1 0.5" rotation="-90 0 0" 
-	src="https://cdn.glitch.com/273f9fc6-d931-4837-afee-fdbe5e740ff7%2Fbase.obj?1557776555988"
-    material="color:#457996;"
-    model-opacity="0.1"
-				     >
-				</a-obj-model>
-		</a-entity>
-			
-    </a-marker>
-
-		<!-- add a simple camera -->
-		<a-entity camera></a-entity>
+  </head>  
+  <body>
+    <h1>Hi there!</h1>
+     <h2>Welcome to Cupsy</h2>
     
+    <div class="text">
+    <p>
+      Please make sure that you have your barcode card infront of you
+      before proceeding
+    </p>
+    
+    <p>
+      After clicking next below, click 'allow' when asked by the new
+      page to use your camera
+    </p>
+      
+      <p>
+      Then point your camera at the barcode on the back of your cupsy card
+    </p>
+      
+      
+
+    </div>
+    
+    <button onclick="myFunction()" class="button">
+      Next  
+      
+    </button>
     
     <script>
-    document.querySelector("button").addEventListener("click", (e)=> {
-  showSlides(slideIndex += n);
-  console.log(5 + 6);
-})
-    </script>
-	</a-scene>
+function myFunction() {
+  location.replace("https://msimbao.github.io/cupsy/main.html")
+}
+</script>
+    
 
-</body>
+  </body>
 </html>
